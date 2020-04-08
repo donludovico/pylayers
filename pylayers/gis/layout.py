@@ -37,7 +37,8 @@ import pandas as pd
 from itertools import combinations, product
 import ast
 from networkx.readwrite import write_gpickle, read_gpickle
-from mpl_toolkits.basemap import Basemap
+from pyproj import Proj
+#from mpl_toolkits.basemap import Basemap
 import shapely.geometry as sh
 import shapefile as shp
 from shapely.ops import cascaded_union
@@ -1445,9 +1446,10 @@ class Layout(pro.PyLayers):
         #
         # TODO change lon_0 and lat_0 hard coded
         #
-        self.m = Basemap(llcrnrlon=kwargs['bd'][0], llcrnrlat=kwargs['bd'][1],
-                         urcrnrlon=kwargs['bd'][2], urcrnrlat=kwargs['bd'][3],
-                         resolution='i', projection='cass', lon_0=24.5, lat_0=60.5)
+        self.m = pyproj.Proj(init="epsg:3857")
+        #self.m = Basemap(llcrnrlon=kwargs['bd'][0], llcrnrlat=kwargs['bd'][1],
+                         #urcrnrlon=kwargs['bd'][2], urcrnrlat=kwargs['bd'][3],
+                         #resolution='i', projection='cass', lon_0=24.5, lat_0=60.5)
 
         if kwargs['latlon']:
             lat_ref = kwargs['pref'][1][0]
@@ -2398,14 +2400,15 @@ class Layout(pro.PyLayers):
             lat_0 = (llcrnrlat+urcrnrlat)/2.
 
             # Construction of Basemap for coordinates transformation
-            self.m = Basemap(llcrnrlon=llcrnrlon,
-                             llcrnrlat=llcrnrlat,
-                             urcrnrlon=urcrnrlon,
-                             urcrnrlat=urcrnrlat,
-                             resolution='i',
-                             projection=projection,
-                             lon_0=lon_0,
-                             lat_0=lat_0)
+            self.m = pyproj.Proj(init="epsg:3857")
+            #self.m = Basemap(llcrnrlon=llcrnrlon,
+                             #llcrnrlat=llcrnrlat,
+                             #urcrnrlon=urcrnrlon,
+                             #urcrnrlat=urcrnrlat,
+                             #resolution='i',
+                             #projection=projection,
+                             #lon_0=lon_0,
+                             #lat_0=lat_0)
 
             self.extent = (llcrnrlon,urcrnrlon,llcrnrlat,urcrnrlat)
             self.pll = self.m(self.extent[0],self.extent[2])

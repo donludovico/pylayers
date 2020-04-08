@@ -20,7 +20,8 @@ else:
 from pylayers.util.project import *
 import pylayers.util.pyutil as pyu
 import pylayers.util.geomutil as geu
-from mpl_toolkits.basemap import Basemap
+from pyproj import Proj
+#from mpl_toolkits.basemap import Basemap
 from matplotlib.collections import PolyCollection
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -214,9 +215,10 @@ class Coords(object):
         lon_0 = (bd[0]+bd[2])/2.
         lat_0 = (bd[1]+bd[3])/2.
 
-        m = Basemap(llcrnrlon=bd[0]-delta, llcrnrlat=bd[1]-delta,
-                    urcrnrlon=bd[2]+delta, urcrnrlat=bd[3]+delta,
-                resolution='i', projection = projection, lon_0=lon_0, lat_0=lat_0)
+        self.m = pyproj.Proj(init="epsg:3857")
+        #m = Basemap(llcrnrlon=bd[0]-delta, llcrnrlat=bd[1]-delta,
+                    #urcrnrlon=bd[2]+delta, urcrnrlat=bd[3]+delta,
+                #resolution='i', projection = projection, lon_0=lon_0, lat_0=lat_0)
 
         for kid in self.latlon:
             if cart:
@@ -991,8 +993,9 @@ def extract(alat,alon,fileosm,fileout):
     print(command)
     os.system(command)
 
-    m = Basemap(llcrnrlon=lonmin,llcrnrlat=latmin,urcrnrlon=lonmax,urcrnrlat=latmax,
-            resolution='i',projection='cass',lon_0=lon_0,lat_0=lat_0)
+    self.m = pyproj.Proj(init="epsg:3857")
+    #m = Basemap(llcrnrlon=lonmin,llcrnrlat=latmin,urcrnrlon=lonmax,urcrnrlat=latmax,
+            #resolution='i',projection='cass',lon_0=lon_0,lat_0=lat_0)
 
     return(m)
 

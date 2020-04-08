@@ -29,7 +29,8 @@ from shapely.geometry import Polygon
 from pylayers.gis.gisutil import *
 import pylayers.gis.kml as gkml
 import pylayers.gis.srtm as srtm
-from mpl_toolkits.basemap import Basemap
+from pyproj import Proj
+#from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from mpl_toolkits.axes_grid1.colorbar import colorbar
 import smopy
@@ -161,13 +162,14 @@ class DEM(PyLayers):
 
         self.lL0 = np.array([lom,lam])
 
-        self.m = Basemap(llcrnrlon = lom,
-                         llcrnrlat = lam,
-                         urcrnrlon = loM,
-                         urcrnrlat = laM,
-                         resolution = 'i',projection='cass',
-                         lon_0 = self.lon_0,
-                         lat_0 = self.lat_0)
+        self.m = pyproj.Proj(init="epsg:3857")
+        #self.m = Basemap(llcrnrlon = lom,
+                         #llcrnrlat = lam,
+                         #urcrnrlon = loM,
+                         #urcrnrlat = laM,
+                         #resolution = 'i',projection='cass',
+                         #lon_0 = self.lon_0,
+                         #lat_0 = self.lat_0)
 
     def dwlsrtm(self):
         """ download srtm tile
@@ -325,13 +327,14 @@ class Ezone(PyLayers):
 
         self.lL0 = np.array([lom,lam])
 
-        self.m = Basemap(llcrnrlon = lom,
-                         llcrnrlat = lam,
-                         urcrnrlon = loM,
-                         urcrnrlat = laM,
-                         resolution = 'i',projection='cass',
-                         lon_0 = self.lon_0,
-                         lat_0 = self.lat_0)
+        self.m = pyproj.Proj(init="epsg:3857")
+        #self.m = Basemap(llcrnrlon = lom,
+                         #llcrnrlat = lam,
+                         #urcrnrlon = loM,
+                         #urcrnrlat = laM,
+                         #resolution = 'i',projection='cass',
+                         #lon_0 = self.lon_0,
+                         #lat_0 = self.lat_0)
 
         self.pll = self.m(self.extent[0],self.extent[2])
         self.pur = self.m(self.extent[1],self.extent[3])
@@ -470,13 +473,14 @@ class Ezone(PyLayers):
         self.lon0 = (self.extent[0]+self.extent[1])/2.
         self.lat0 = (self.extent[2]+self.extent[3])/2.
 
-        self.m = Basemap(llcrnrlon = self.extent[0],
-                         llcrnrlat = self.extent[2],
-                         urcrnrlon = self.extent[1],
-                         urcrnrlat = self.extent[3],
-                         resolution = 'i',projection='cass',
-                         lon_0 = self.lon0,
-                         lat_0 = self.lat0)
+        self.m = pyproj.Proj(init="epsg:3857")
+        #self.m = Basemap(llcrnrlon = self.extent[0],
+                         #llcrnrlat = self.extent[2],
+                         #urcrnrlon = self.extent[1],
+                         #urcrnrlat = self.extent[3],
+                         #resolution = 'i',projection='cass',
+                         #lon_0 = self.lon0,
+                         #lat_0 = self.lat0)
         self.pll = self.m(self.extent[0],self.extent[2])
         self.pur = self.m(self.extent[1],self.extent[3])
 
